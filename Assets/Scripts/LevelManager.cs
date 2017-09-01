@@ -4,17 +4,22 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour {
+    
+    public float timeUntilNextLevel = 5.0f;
+    public bool autoLoadNextLevel = false;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-
-    // Update is called once per frame
     void Update() {
-        if (Input.GetButtonDown("Fire1") || Input.GetKeyDown(KeyCode.Space)) {
-            // load the next scene, current scene plus one
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        timeUntilNextLevel -= Time.deltaTime;
+        if (autoLoadNextLevel && timeUntilNextLevel <= 0) {
+            LoadNextScene();
         }
+    }
+
+    public void LoadNextScene () {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void LoadPreviousLevel () {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 }
